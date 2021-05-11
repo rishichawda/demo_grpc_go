@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	port = ":50051"
+	port = ":8000"
 )
 
 type server struct {
@@ -18,7 +18,7 @@ type server struct {
 }
 
 func (s *server) Greet(ctx context.Context, in *pb.GreetRequest) (*pb.GreetResponse, error) {
-	return &pb.GreetResponse{Message: "Hello again " + in.GetName()}, nil
+	return &pb.GreetResponse{Message: "Hello " + in.GetName()}, nil
 }
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterGreeterServer(s, &server{})
+	pb.RegisterHelloWorldGreeterServer(s, &server{})
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
